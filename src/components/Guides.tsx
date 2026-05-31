@@ -166,6 +166,34 @@ export default function Guides({ rollNumber }: Props) {
           {/* Troubleshooting Cards */}
           <div className="border border-[rgba(239,68,68,0.15)] bg-[rgba(239,68,68,0.02)] rounded-xl p-5 text-sm">
             <h4 className="font-bold text-[#ef4444] flex items-center gap-2 mb-2">
+              <TriangleAlert size={16} /> {"G-Space Verification Not Received (Case Sensitivity)"}
+            </h4>
+            <p className="text-[var(--text-muted)] mb-3">
+              {"The IITM G-Space grading system is strictly "}<strong>{"case-sensitive"}</strong>{" for roll numbers. If your code or GCS bucket uses a lowercase 'f' (e.g., "}<code>{"25f3001012"}</code>{"), the automated bot will silently fail to match your account and won't send the completion checkmark."}
+            </p>
+            <div className="bg-black/5 border-l-3 border-[#059669] p-3.5 rounded-r-lg">
+              <p className="text-gray-900 text-xs">
+                <strong>{"Fix:"}</strong>{" Always use an uppercase "}<strong>{"'F'"}</strong>{" (e.g., "}<code>{"25F3001012"}</code>{") in your GCS bucket name, Cloud Run service name, and Pub/Sub message payload. Re-deploy with the uppercase roll number to trigger the bot."}
+              </p>
+            </div>
+          </div>
+
+          <div className="border border-[rgba(239,68,68,0.15)] bg-[rgba(239,68,68,0.02)] rounded-xl p-5 text-sm">
+            <h4 className="font-bold text-[#ef4444] flex items-center gap-2 mb-2">
+              <TriangleAlert size={16} /> {"Failed to initialize due to quota exceeded"}
+            </h4>
+            <p className="text-[var(--text-muted)] mb-3">
+              {"In the sandboxed GCP student environment, resource creation is strictly restricted and whitelisted ONLY for the "}<strong>{"us-central1 (Iowa)"}</strong>{" region. Trying to deploy in other regions like "}<code>{"us-east1"}</code>{" or "}<code>{"europe-west3"}</code>{" will fail immediately with a quota error."}
+            </p>
+            <div className="bg-black/5 border-l-3 border-[#059669] p-3.5 rounded-r-lg">
+              <p className="text-gray-900 text-xs">
+                <strong>{"Fix:"}</strong>{" Delete the failed function and recreate it. Make sure you manually select "}<strong>{"us-central1 (Iowa)"}</strong>{" as the region during setup for both Cloud Run and Cloud Storage."}
+              </p>
+            </div>
+          </div>
+
+          <div className="border border-[rgba(239,68,68,0.15)] bg-[rgba(239,68,68,0.02)] rounded-xl p-5 text-sm">
+            <h4 className="font-bold text-[#ef4444] flex items-center gap-2 mb-2">
               <TriangleAlert size={16} /> {"Message failed schema validation"}
             </h4>
             <p className="text-[var(--text-muted)] mb-3">
