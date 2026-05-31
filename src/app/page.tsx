@@ -18,13 +18,13 @@ export default function Home() {
         {/* Header */}
         <header className="text-center flex flex-col items-center gap-3">
           <span className="bg-gradient-to-r from-[#0088cc] to-[#7a3ec8] text-white font-extrabold text-[0.7rem] md:text-xs px-4 py-1.5 rounded-full uppercase tracking-wider shadow-[0_4px_15px_rgba(0,136,204,0.15)]">
-            Day 2 Pipeline Helper
+            {"Day 2 Pipeline Helper"}
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-[#111827] via-[#7a3ec8] to-[#0088cc] bg-clip-text text-transparent">
-            IITM GCP Workshop Guide
+            {"IITM GCP Workshop Guide"}
           </h1>
           <p className="text-[var(--text-muted)] text-sm md:text-base max-w-xl font-light">
-            Generate customized pipeline files, download assets, and troubleshoot error messages to secure your workshop certificate.
+            {"Generate customized pipeline files, download assets, and troubleshoot error messages to secure your workshop certificate."}
           </p>
         </header>
 
@@ -33,7 +33,7 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#0088cc] to-transparent" />
           <div className="w-full max-w-lg text-center flex flex-col gap-3">
             <label className="text-xs md:text-sm font-bold uppercase tracking-wider text-gray-800">
-              Step 0: Enter Your Roll Number
+              {"Step 0: Enter Your Roll Number"}
             </label>
             <div className="relative flex items-center">
               <GraduationCap className="absolute left-5 text-[#0088cc]" size={20} />
@@ -46,7 +46,7 @@ export default function Home() {
               />
             </div>
             <p className="text-xs text-[var(--text-muted)]">
-              This will instantly customize all file generators and steps below.
+              {"This will instantly customize all file generators and steps below."}
             </p>
           </div>
         </section>
@@ -72,9 +72,9 @@ export default function Home() {
               <User size={32} />
             </div>
             <div className="flex-grow text-center md:text-left">
-              <h3 className="text-lg font-bold text-gray-900 mb-1">About Me</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-1">{"About Me"}</h3>
               <p className="text-sm text-[var(--text-muted)] mb-4">
-                Hey, I'm Aryan Maurya! I created this visual helper app to simplify complex Google Cloud configurations for my IITM classmates. Check out my portfolio to see more of my software and system projects!
+                {"Hey, I'm Aryan Maurya! I created this visual helper app to simplify complex Google Cloud configurations for my IITM classmates. Check out my portfolio to see more of my software and system projects!"}
               </p>
               <a
                 href="https://me-aryan.vercel.app"
@@ -82,7 +82,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-[#0088cc] hover:text-[#7a3ec8] transition-colors"
               >
-                View My Portfolio <ExternalLink size={14} />
+                {"View My Portfolio"} <ExternalLink size={14} />
               </a>
             </div>
           </div>
@@ -90,9 +90,9 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="text-center border-t border-[var(--border-color)] pt-8 flex items-center justify-center gap-2 text-xs md:text-sm text-[var(--text-muted)]">
-          <span>Built with</span>
+          <span>{"Built with"}</span>
           <Heart size={14} className="text-[#ef4444] fill-[#ef4444]" />
-          <span>by Aryan Maurya to help classmates succeed.</span>
+          <span>{"by Aryan Maurya to help classmates succeed."}</span>
         </footer>
       </div>
     </main>

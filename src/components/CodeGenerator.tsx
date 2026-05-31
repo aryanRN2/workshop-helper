@@ -200,7 +200,6 @@ def gcs_inference(cloud_event):
         print(f"File {name} is not a data CSV, skipping inference.")
         return json.dumps({'status': 'ignored'})`;
 
-  // Download logic
   const handleDownload = (filename: string, content: string, type: string) => {
     const blob = new Blob([content], { type });
     const url = URL.createObjectURL(blob);
@@ -222,15 +221,15 @@ def gcs_inference(cloud_event):
 
   return (
     <div className="glass-panel p-6 flex flex-col gap-6">
-      <h2 className="text-xl font-bold flex items-center gap-3">
-        <FileCode className="text-[#a155e8]" /> Asset Generator
+      <h2 className="text-xl font-bold flex items-center gap-3 text-gray-900">
+        <FileCode className="text-[#7a3ec8]" /> Asset Generator
       </h2>
 
       {/* Button Stack */}
       <div className="flex flex-col gap-3">
         <button
           onClick={() => handleDownload("main.py", mainPyContent, "text/plain")}
-          className="w-full bg-gradient-to-r from-[#00d2ff] to-[#a155e8] text-black font-bold p-3.5 rounded-xl hover:shadow-[0_0_20px_rgba(0,210,255,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full bg-gradient-to-r from-[#0088cc] to-[#7a3ec8] text-white font-bold p-3.5 rounded-xl hover:shadow-[0_4px_15px_rgba(0,136,204,0.2)] transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           <Download size={18} /> Download main.py
         </button>
@@ -239,14 +238,14 @@ def gcs_inference(cloud_event):
           onClick={() =>
             handleDownload("requirements.txt", requirementsContent, "text/plain")
           }
-          className="w-full bg-[rgba(255,255,255,0.03)] border border-[var(--border-color)] text-white font-medium p-3.5 rounded-xl hover:border-[#00d2ff] transition-all flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full bg-white border border-gray-300 text-gray-800 font-semibold p-3.5 rounded-xl hover:bg-gray-50 hover:border-[#0088cc] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
         >
           <Download size={18} /> Download requirements.txt
         </button>
 
         <button
           onClick={() => handleDownload("test.csv", testCsvContent, "text/csv")}
-          className="w-full bg-[rgba(255,255,255,0.03)] border border-[var(--border-color)] text-white font-medium p-3.5 rounded-xl hover:border-[#00d2ff] transition-all flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full bg-white border border-gray-300 text-gray-800 font-semibold p-3.5 rounded-xl hover:bg-gray-50 hover:border-[#0088cc] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
         >
           <Download size={18} /> Download test.csv
         </button>
@@ -258,9 +257,9 @@ def gcs_inference(cloud_event):
           <span className="font-mono">main.py</span>
           <button
             onClick={() => handleCopy(mainPyContent, setCopiedMain)}
-            className="flex items-center gap-1.5 hover:text-[#00d2ff] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 hover:text-[#0088cc] transition-colors cursor-pointer"
           >
-            {copiedMain ? <Check size={14} className="text-[#10b981]" /> : <Copy size={14} />}
+            {copiedMain ? <Check size={14} className="text-[#059669]" /> : <Copy size={14} />}
             {copiedMain ? "Copied!" : "Copy Code"}
           </button>
         </div>
@@ -281,9 +280,9 @@ def gcs_inference(cloud_event):
           <span className="font-mono">requirements.txt</span>
           <button
             onClick={() => handleCopy(requirementsContent, setCopiedReq)}
-            className="flex items-center gap-1.5 hover:text-[#00d2ff] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 hover:text-[#0088cc] transition-colors cursor-pointer"
           >
-            {copiedReq ? <Check size={14} className="text-[#10b981]" /> : <Copy size={14} />}
+            {copiedReq ? <Check size={14} className="text-[#059669]" /> : <Copy size={14} />}
             {copiedReq ? "Copied!" : "Copy Code"}
           </button>
         </div>
