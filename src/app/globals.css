@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --bg-color: #080b11;
+  --card-bg: rgba(13, 20, 35, 0.7);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --primary-glow: #00d2ff;
+  --secondary-glow: #a155e8;
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism components */
+.glass-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.glass-panel:hover {
+  border-color: rgba(0, 210, 255, 0.15);
+}
+
+/* Futuristic code display */
+.code-container {
+  background: #050811;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.code-pre {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #c9d1d9;
+  overflow: auto;
+  max-height: 350px;
+  padding: 16px;
+  text-align: left;
+}
+
+/* Code Highlighting styling */
+.c-keyword { color: #ff7b72; font-weight: 500; }
+.c-string  { color: #a5d6ff; }
+.c-comment { color: #8b949e; font-style: italic; }
+.c-func    { color: #d2a8ff; }
+.c-number  { color: #79c0ff; }
+
+/* 3D background wrapper */
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(161, 85, 232, 0.04) 0%, transparent 40%);
+}
