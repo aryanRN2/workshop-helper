@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --bg-color: #080b11;
-  --card-bg: rgba(13, 20, 35, 0.7);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --primary-glow: #00d2ff;
-  --secondary-glow: #a155e8;
-  --text-main: #f3f4f6;
-  --text-muted: #9ca3af;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
-  --error-color: #ef4444;
+  --bg-color: #f7f9fc;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --primary-glow: #0088cc;
+  --secondary-glow: #7a3ec8;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --success-color: #059669;
+  --warning-color: #d97706;
+  --error-color: #dc2626;
 }
 
 body {
@@ -27,17 +27,18 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 20px;
   backdrop-filter: blur(16px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
 }
 
 .glass-panel:hover {
-  border-color: rgba(0, 210, 255, 0.15);
+  border-color: rgba(0, 136, 204, 0.3);
+  box-shadow: 0 10px 35px rgba(0, 136, 204, 0.06);
 }
 
 /* Futuristic code display */
 .code-container {
-  background: #050811;
+  background: #0d1117;
   border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
@@ -71,6 +72,6 @@ body {
   z-index: -1;
   pointer-events: none;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.04) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(161, 85, 232, 0.04) 0%, transparent 40%);
+    radial-gradient(circle at 10% 20%, rgba(0, 136, 204, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(122, 62, 200, 0.03) 0%, transparent 40%);
 }

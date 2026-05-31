@@ -32,10 +32,10 @@ export default function GcsCanvas3D() {
     // Central Wireframe Sphere (Cloud Storage)
     const sphereGeo = new THREE.IcosahedronGeometry(12, 1);
     const sphereMat = new THREE.MeshBasicMaterial({
-      color: 0x00d2ff,
+      color: 0x0088cc,
       wireframe: true,
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.12,
     });
     const mainSphere = new THREE.Mesh(sphereGeo, sphereMat);
     scene.add(mainSphere);
@@ -43,7 +43,7 @@ export default function GcsCanvas3D() {
     // Outer Orbiting Nodes
     const nodesGroup = new THREE.Group();
     const nodeGeo = new THREE.SphereGeometry(0.3, 16, 16);
-    const nodeMat = new THREE.MeshBasicMaterial({ color: 0xa155e8 });
+    const nodeMat = new THREE.MeshBasicMaterial({ color: 0x7a3ec8 });
     const nodesCount = 15;
     const nodePositions: THREE.Vector3[] = [];
 
@@ -67,9 +67,9 @@ export default function GcsCanvas3D() {
 
     // Dynamic Connections (Orbit Lines)
     const lineMat = new THREE.LineBasicMaterial({
-      color: 0x00d2ff,
+      color: 0x0088cc,
       transparent: true,
-      opacity: 0.05,
+      opacity: 0.06,
     });
 
     nodePositions.forEach((pos) => {
@@ -104,10 +104,10 @@ export default function GcsCanvas3D() {
     );
 
     const particlesMat = new THREE.PointsMaterial({
-      size: 0.15,
-      color: 0x00d2ff,
+      size: 0.2,
+      color: 0x0088cc,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.35,
     });
 
     const starField = new THREE.Points(particlesGeo, particlesMat);
