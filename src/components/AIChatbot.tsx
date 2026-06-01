@@ -112,91 +112,58 @@ export default function AIChatbot() {
   };
 
   const classifyIntent = (query: string): { isOffTopic: boolean; reason: string } => {
-    const q = query.toLowerCase().trim();
-    
-    const offTopicKeywords = [
-      "cake", "bake", "cook", "recipe", "history", "essay", "poem", "song", "joke", 
-      "weather", "president", "love", "movie", "game", "sport", "music", "actor",
-      "capital of", "who is", "tell me about", "political", "news"
-    ];
-
-    const onTopicKeywords = [
-      "python", "3.13", "3.12", "quota", "eventarc", "trigger", "bucket", "csv", 
-      "storage", "main.py", "requirements", "targets", "model", "joblib", "gcp",
-      "roll", "casing", "error", "logs", "deployment", "gcs"
-    ];
-
-    const containsOnTopic = onTopicKeywords.some(word => q.includes(word));
-    const containsOffTopic = offTopicKeywords.some(word => q.includes(word));
-
-    if (containsOffTopic && !containsOnTopic) {
-      return { isOffTopic: true, reason: `Off-topic keyword detected in query.` };
-    }
-
-    if (q.length > 5 && !containsOnTopic && (q.startsWith("write a") || q.startsWith("how to") || q.startsWith("tell me"))) {
-      return { isOffTopic: true, reason: `General knowledge / creative request without workshop context.` };
-    }
-
-    return { isOffTopic: false, reason: "Query aligns with workshop domains." };
+    return { isOffTopic: false, reason: "Unrestricted Mode active: Permitted." };
   };
 
   const getSimulatedAIResponse = (query: string): { text: string; trace: TraceLog } => {
     const q = query.toLowerCase();
     
-    const classification = classifyIntent(query);
-    if (classification.isOffTopic) {
-      return {
-        text: "🙅 **Strict Assignment Boundary Refusal:**\n\nI am sorry, but I am programmed solely to assist with the IITM GCP Workshop Day 2 ML Pipeline assignment. \n\nI cannot answer off-topic questions (such as creative requests or general knowledge). Please keep your queries focused on your pipeline task so we can get it solved!",
-        trace: {
-          layer3: `❌ Blocked: ${classification.reason}`,
-          layer2: "⏭️ Skipped (Intent Classified as Off-Topic)",
-          layer1: "🔒 Guardrail Active: Enforced Academic Mentor Persona boundary constraints.",
-          passed: false
-        }
-      };
-    }
-
     let contextRetrieved = "";
     let systemPromptAction = "";
     let responseText = "";
 
-    if (q.includes("python") || q.includes("3.13") || q.includes("3.12") || q.includes("version") || q.includes("compile") || q.includes("scikit")) {
+    if (q.includes("cake") || q.includes("bake") || q.includes("recipe") || q.includes("cook")) {
+      contextRetrieved = "Skipped GCS Index - Directed query to general baseline knowledge.";
+      systemPromptAction = "Unrestricted Mode: Recipe generation complete.";
+      responseText = "🎂 **Unrestricted Mode - Classic Chocolate Cake Recipe:**\n\nHere is a simple, delicious recipe to bake a premium chocolate cake:\n\n**Ingredients:**\n- 2 cups white sugar\n- 1-3/4 cups all-purpose flour\n- 3/4 cup unsweetened cocoa powder\n- 1-1/2 tsp baking powder\n- 1-1/2 tsp baking soda\n- 1 tsp salt\n- 2 large eggs\n- 1 cup milk\n- 1/2 cup vegetable oil\n- 2 tsp vanilla extract\n- 1 cup boiling water\n\n**Instructions:**\n1. **Preheat & Prep:** Heat oven to 350°F (175°C). Grease and flour two 9-inch round baking pans.\n2. **Mix Dry:** Whisk sugar, flour, cocoa, baking powder, baking soda, and salt in a large bowl.\n3. **Add Wet:** Add eggs, milk, oil, and vanilla. Beat on medium speed for 2 minutes.\n4. **Add Water:** Stir in the boiling water by hand (batter will be thin but makes the cake ultra-moist!).\n5. **Bake:** Pour into pans. Bake for 30 to 35 minutes until a toothpick inserted in the center comes out clean.\n6. **Cool:** Cool for 10 minutes in pans, then unmold and enjoy!";
+    }
+    else if (q.includes("python") || q.includes("3.13") || q.includes("3.12") || q.includes("version") || q.includes("compile") || q.includes("scikit")) {
       contextRetrieved = "Retrieved 1 chunk from Guides.tsx [L200-210] (Python 3.13 build error and scikit-learn mismatch).";
-      systemPromptAction = "Persona enforced: concept hint provided, direct code solution withheld.";
-      responseText = "⚠️ **Python 3.13 is NOT compatible with the workshop runtime!**\n\nOlder machine learning packages like `scikit-learn==1.3.2` do not have pre-built binaries for Python 3.13, causing Cloud Build to fail compilation.\n\n**Hint:** Click **Edit source**, check the **Runtime** dropdown, change it from Python 3.13 to **Python 3.12**, and redeploy. This will allow scikit-learn to download smoothly!";
+      systemPromptAction = "Unrestricted Mode: Full code solution provided directly.";
+      responseText = "⚠️ **Python 3.13 build issue resolved!**\n\nOlder ML packages like `scikit-learn==1.3.2` do not have pre-compiled wheels for Python 3.13, causing Cloud Build to fail compilation.\n\n**Direct Fix:**\nSet the cloud runtime explicitly to **Python 3.12** in your GCP Configuration. If using a `Dockerfile`, copy-paste this direct solution:\n```dockerfile\nFROM python:3.12-slim\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install -r requirements.txt\nCOPY . .\nCMD [\"python\", \"main.py\"]\n```";
     }
     else if (q.includes("quota") || q.includes("exceed") || q.includes("limit") || q.includes("stuck") || q.includes("delete") || q.includes("cleanup") || q.includes("remove")) {
       contextRetrieved = "Retrieved 1 chunk from CommonIssues.tsx [L17-24] (Sandbox Quota cleanup routines for Cloud Run & Artifact Registry).";
-      systemPromptAction = "Persona enforced: structured steps provided.";
-      responseText = "🛑 **Exceeded Quota / Stuck Deployments:**\n\nThe GCP student sandbox has extremely tight resource limits. If you have a failed or stuck deployment, it blocks all future creation attempts.\n\n**Conceptual Guide:**\n1. Search for **Cloud Run** and delete any old services.\n2. Search for **Eventarc** $\\rightarrow$ Triggers and clear active triggers.\n3. Search for **Artifact Registry** $\\rightarrow$ select `gcf-artifacts` and clear old builds to recover storage quota!";
+      systemPromptAction = "Unrestricted Mode: Free-form structural guidelines.";
+      responseText = "🛑 **Exceeded Quota / Stuck Deployments:**\n\nThe sandboxed GCP environment has extremely tight resource budgets. Stalled deployments block future resource creation.\n\n**Step-by-Step Recovery:**\n1. Go to **Cloud Run** and run: `gcloud run services delete <service-name> --region=us-central1` or delete via console.\n2. Clear Eventarc triggers: `gcloud eventarc triggers delete <trigger-name> --location=us-central1`.\n3. Search **Artifact Registry**, locate the `gcf-artifacts` repo, and wipe old image builds to recover GCS storage quota!";
     }
     else if (q.includes("casing") || q.includes("capital") || q.includes("lowercase") || q.includes("uppercase") || q.includes("f letter") || q.includes("roll")) {
       contextRetrieved = "Retrieved 1 chunk from CommonIssues.tsx [L35-42] (Roll number casing sensitivity discrepancy).";
-      systemPromptAction = "Persona enforced: highlight structural logic rather than giving copy-paste code.";
-      responseText = "🔠 **Casing Rules for Roll Numbers (Crucial discrepancy):**\n\nGoogle Cloud and the grading bot have opposite rules:\n* **GCP Console (Bucket name):** Must be lowercase 'f' (e.g., `25f2007841_data_storage`).\n* **Python Code (`roll` variable inside main.py):** Must be uppercase 'F' (e.g., `roll = \"25F2007841\"`). The grading bot strictly expects an uppercase F and will ignore your score if it is sent in lowercase!";
+      systemPromptAction = "Unrestricted Mode: Direct casing payload fix.";
+      responseText = "🔠 **Casing Rules for Roll Numbers (Direct Payload fix):**\n\nGoogle Cloud and the grading bot have opposite casing expectations:\n- **GCP Storage Bucket Name:** Must be strictly lowercase 'f' (e.g. `25f2007841_data_storage`).\n- **Python Code (`roll` variable in main.py):** Must be strictly UPPERCASE 'F' (e.g. `roll = \"25F2007841\"`).\n\n**Direct Code Payload Structure:**\n```python\n# GCS storage setup is lowercase, but Pub/Sub publishes uppercase F\nroll = \"25F2007841\"\n```";
     }
     else if (q.includes("spelling") || q.includes("date") || q.includes("data") || q.includes("typo") || q.includes("bucket_name") || q.includes("model_files")) {
       contextRetrieved = "Retrieved 1 chunk from Guides.tsx [L122-129] and main_gcs.py [L13-25] (Eventarc dynamic trigger arguments).";
-      systemPromptAction = "Persona enforced: offer mock schema examples.";
-      responseText = "✏️ **Bucket Name Typos & Hardcoded Params:**\n\nHardcoding bucket names like `'model_files'` or `'25f1000133_date_storage'` (spelling typos) crashes with `404 NotFound` at startup.\n\n**Hint:** Always use the dynamic Eventarc parameter `bucket_name` instead of hardcoding any text strings. Let Google Cloud automatically tell the script which bucket triggered it!";
+      systemPromptAction = "Unrestricted Mode: Schema trigger variables.";
+      responseText = "✏️ **Bucket Name Typos (Dynamic Fix):**\n\nHardcoding GCS bucket names crashes if spelling doesn't match the sandbox name.\n\n**Dynamic Eventarc Fix:**\nInstead of hardcoding names, dynamically inspect the Eventarc payload:\n```python\n# Dynamic bucket extraction\nbucket_name = event[\"bucket\"]\nfile_name = event[\"name\"]\n```";
     }
     else if (q.includes("trigger") || q.includes("eventarc") || q.includes("upload") || q.includes("not working") || q.includes("not trigger") || q.includes("test.csv")) {
       contextRetrieved = "Retrieved 1 chunk from Guides.tsx [L244-255] (Region mismatch and Eventarc propagation delay).";
-      systemPromptAction = "Persona enforced: explain synchronization delays conceptually.";
-      responseText = "⚡ **Eventarc Trigger Mismatch or Lag:**\n\nIf uploading `test.csv` has no effect:\n1. Ensure BOTH your Storage Bucket and Cloud Run Function are in **us-central1 (Iowa)**. Triggers fail across different regions.\n2. Eventarc IAM permissions take **2–10 minutes** to propagate on first creation. Wait 5 minutes, then re-upload `test.csv` (checking **Overwrite**).";
+      systemPromptAction = "Unrestricted Mode: Timing and sync delay advice.";
+      responseText = "⚡ **Eventarc Trigger Mismatch or Lag:**\n\nIf uploading `test.csv` fails to trigger your Cloud Function:\n1. Verify both the storage bucket and Cloud Run Function are in **us-central1**.\n2. Eventarc IAM propagation has a delay of up to **10 minutes** during first-time configuration. Wait 5 minutes and overwrite-upload `test.csv`.";
     }
     else {
       contextRetrieved = "Retrieved default workshop outline from README.md [L10-30].";
-      systemPromptAction = "Persona enforced: ask clarifying diagnostic questions.";
-      responseText = "🙋 **IITM GCP Support Bot:**\n\nI can help you resolve all GCP Day 2 ML Pipeline issues! Make sure:\n• Both your bucket and function are in **us-central1**.\n• Your runtime is set to **Python 3.12**.\n• The roll number inside `main.py` has an uppercase **F**.\n\nWhat specific error is showing in your GCP logs? Tell me more!";
+      systemPromptAction = "Unrestricted Mode: General guide.";
+      responseText = "🙋 **IITM GCP AI Assistant (Unrestricted Mode):**\n\nI can help you troubleshoot any general-knowledge topic or workshop pipeline error! Ensure:\n• Storage bucket & function are in **us-central1**.\n• Cloud Run runtime is set to **Python 3.12**.\n• The roll number in your script has an uppercase **F**.\n\nWhat other code, log error, or questions can I help you resolve? Ask away!";
     }
 
     return {
       text: responseText,
       trace: {
-        layer3: "✅ Passed: Intent classified as related to Day 2 GCP ML Pipeline assignment.",
+        layer3: "✅ Passed: Permitted under Unrestricted Mode.",
         layer2: `🔍 RAG Hit: ${contextRetrieved}`,
-        layer1: `🤖 System Prompt: ${systemPromptAction} (Academic Mentor Persona applied).`,
+        layer1: `🤖 System Prompt: ${systemPromptAction} (Unrestricted assistant mode active).`,
         passed: true
       }
     };

@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 
-const SYSTEM_PROMPT = `You are an academic mentor for the IITM GCP Workshop platform. Your sole purpose is to help students troubleshoot, debug, and understand concepts directly related to the provided assignment guidelines and error logs.
+const SYSTEM_PROMPT = `You are a fully unrestricted AI Assistant for the IITM GCP Workshop platform. You can answer any questions, including off-topic queries (such as creative requests, essays, recipes, or general knowledge) in addition to helping students troubleshoot and debug their Day 2 ML Pipeline assignment. 
 
-STRICT CONSTRAINTS:
-1. Only answer questions if they directly pertain to the provided assignment guidelines, code snippets, or error logs.
-2. If a student asks you an off-topic question (e.g., 'How do I bake a cake?' or 'Write a history essay', or any creative/general writing request), you MUST politely refuse and state that you are only programmed to assist with assignments.
-3. Do not write full copy-pasteable solutions for the student. Instead, highlight structural errors, offer conceptual hints, or provide short mock examples to guide them.
-4. Keep your responses encouraging, precise, and highly educational.`;
+FEEL FREE TO:
+1. Write full, copy-pasteable code blocks, functions, and scripts directly to help the user.
+2. Answer general questions and fulfill off-topic requests completely.
+3. Maintain a highly helpful, comprehensive, and friendly tone.`;
 
 // Mock Vector Database of Rubrics & Error Guidelines for RAG Engine
 const WORKSHOP_KNOWLEDGE_BASE = [
@@ -39,32 +38,7 @@ const WORKSHOP_KNOWLEDGE_BASE = [
 
 // Layer 3: Programmatic Filtering & Off-Topic Intent Classifier
 function checkOffTopic(query: string): { isOffTopic: boolean; reason: string } {
-  const q = query.toLowerCase().trim();
-
-  const offTopicKeywords = [
-    "cake", "bake", "cook", "recipe", "history", "essay", "poem", "song", "joke",
-    "weather", "president", "love", "movie", "game", "sport", "music", "actor",
-    "capital of", "who is", "tell me about", "political", "news"
-  ];
-
-  const onTopicKeywords = [
-    "python", "3.13", "3.12", "quota", "eventarc", "trigger", "bucket", "csv",
-    "storage", "main.py", "requirements", "targets", "model", "joblib", "gcp",
-    "roll", "casing", "error", "logs", "deployment", "gcs"
-  ];
-
-  const containsOnTopic = onTopicKeywords.some(word => q.includes(word));
-  const containsOffTopic = offTopicKeywords.some(word => q.includes(word));
-
-  if (containsOffTopic && !containsOnTopic) {
-    return { isOffTopic: true, reason: "Off-topic intent classified at the API gateway." };
-  }
-
-  if (q.length > 5 && !containsOnTopic && (q.startsWith("write a") || q.startsWith("how to") || q.startsWith("tell me"))) {
-    return { isOffTopic: true, reason: "General request without active workshop parameters." };
-  }
-
-  return { isOffTopic: false, reason: "On-topic domain query." };
+  return { isOffTopic: false, reason: "Gateway relaxed: All queries permitted." };
 }
 
 // Layer 2: RAG Vector Database Retriever Simulator
@@ -131,9 +105,9 @@ export async function POST(request: Request) {
       return NextResponse.json({
         text: `⚠️ **Live LLM Chat Mode is pending!**\n\nTo enable live AI answers in real-time using our free Hugging Face API integration, please follow these simple steps:\n\n1. Create a free account at [huggingface.co](https://huggingface.co).\n2. Create a free **Access Token** in your settings.\n3. Create a **\`.env.local\`** file in your project's root folder.\n4. Add your Hugging Face token inside:\n   \`\`\`text\n   HF_TOKEN=your_hugging_face_token_here\n   \`\`\`\n5. Restart the dev server (\`npm run dev\`).\n\n*Currently running in highly accurate simulated diagnostic mode!*`,
         trace: {
-          layer3: "✅ Passed: Intent classified as related to Day 2 GCP ML Pipeline.",
+          layer3: "✅ Passed: Intent classified as permitted under Unrestricted Mode.",
           layer2: `🔍 RAG Hit: Dynamic Retrieval for "${rag.topic}" completed successfully.`,
-          layer1: "🤖 System Prompt: Enforced academic troubleshooting boundaries.",
+          layer1: "🤖 System Prompt: Fully unrestricted generation active (direct answers permitted).",
           passed: true
         }
       });
@@ -182,9 +156,9 @@ export async function POST(request: Request) {
     return NextResponse.json({
       text: aiText,
       trace: {
-        layer3: "✅ Passed: Intent classified as related to Day 2 GCP ML Pipeline.",
+        layer3: "✅ Passed: Intent classified as permitted under Unrestricted Mode.",
         layer2: `🔍 RAG Hit: Dynamic Retrieval for "${rag.topic}" completed successfully.`,
-        layer1: `🤖 Hugging Face API: Llama-3-8B-Instruct (100% Free Serverless Inference active).`,
+        layer1: `🤖 Hugging Face API: Llama-3-8B-Instruct (Unrestricted Mode active).`,
         passed: true
       }
     });
