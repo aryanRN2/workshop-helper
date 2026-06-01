@@ -5,6 +5,8 @@ import { GraduationCap, Heart, ExternalLink, User } from "lucide-react";
 import GcsCanvas3D from "@/components/GcsCanvas3D";
 import Guides from "@/components/Guides";
 import CodeGenerator from "@/components/CodeGenerator";
+import CommonIssues from "@/components/CommonIssues";
+import AIChatbot from "@/components/AIChatbot";
 
 export default function Home() {
   const [rollNumber, setRollNumber] = useState("24F2001627");
@@ -51,6 +53,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Common Issues & Quick Pitfalls */}
+        <CommonIssues />
+
         {/* Workspace Layout */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
           {/* Guides Panel */}
@@ -95,6 +100,9 @@ export default function Home() {
           <span>{"by Aryan Maurya to help classmates succeed."}</span>
         </footer>
       </div>
+      
+      {/* Floating AI Chatbot Assistant */}
+      <AIChatbot />
     </main>
   );
 }

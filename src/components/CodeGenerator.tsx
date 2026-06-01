@@ -234,21 +234,41 @@ def gcs_inference(cloud_event):
           <Download size={18} /> Download main.py
         </button>
 
-        <button
-          onClick={() =>
-            handleDownload("requirements.txt", requirementsContent, "text/plain")
-          }
-          className="w-full bg-white border border-gray-300 text-gray-800 font-semibold p-3.5 rounded-xl hover:bg-gray-50 hover:border-[#0088cc] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-        >
-          <Download size={18} /> Download requirements.txt
-        </button>
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            onClick={() =>
+              handleDownload("requirements.txt", requirementsContent, "text/plain")
+            }
+            className="bg-white border border-gray-300 text-gray-800 font-semibold py-3 px-2 text-xs md:text-sm rounded-xl hover:bg-gray-50 hover:border-[#0088cc] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+          >
+            <Download size={16} /> requirements.txt
+          </button>
 
-        <button
-          onClick={() => handleDownload("test.csv", testCsvContent, "text/csv")}
-          className="w-full bg-white border border-gray-300 text-gray-800 font-semibold p-3.5 rounded-xl hover:bg-gray-50 hover:border-[#0088cc] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-        >
-          <Download size={18} /> Download test.csv
-        </button>
+          <button
+            onClick={() => handleDownload("test.csv", testCsvContent, "text/csv")}
+            className="bg-white border border-gray-300 text-gray-800 font-semibold py-3 px-2 text-xs md:text-sm rounded-xl hover:bg-gray-50 hover:border-[#0088cc] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+          >
+            <Download size={16} /> test.csv (Trigger Data)
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <a
+            href="/model.joblib"
+            download="model.joblib"
+            className="bg-white border border-gray-300 text-gray-800 font-semibold py-3 px-2 text-xs md:text-sm rounded-xl hover:bg-gray-50 hover:border-[#0088cc] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+          >
+            <Download size={16} /> model.joblib
+          </a>
+
+          <a
+            href="/test_targets.csv"
+            download="test_targets.csv"
+            className="bg-white border border-gray-300 text-gray-800 font-semibold py-3 px-2 text-xs md:text-sm rounded-xl hover:bg-gray-50 hover:border-[#0088cc] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+          >
+            <Download size={16} /> test_targets.csv
+          </a>
+        </div>
       </div>
 
       {/* main.py code window */}

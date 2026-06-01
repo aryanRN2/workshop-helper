@@ -104,17 +104,20 @@ export default function Guides({ rollNumber }: Props) {
                 <p className="text-[var(--text-muted)] mb-2">
                   {"Go to "}<strong>{"Cloud Run"}</strong>{", click "}<strong>{"Write a function"}</strong>{", and configure:"}
                 </p>
-                <div className="flex flex-wrap gap-2 text-xs mb-3">
+                <div className="flex flex-wrap gap-2 text-xs mb-2">
                   <span className="bg-[rgba(161,85,232,0.15)] text-[#a155e8] border border-[rgba(161,85,232,0.2)] px-2.5 py-1 rounded-md font-mono">
                     {"Name: gcs-inference"}
                   </span>
                   <span className="bg-[rgba(161,85,232,0.15)] text-[#a155e8] border border-[rgba(161,85,232,0.2)] px-2.5 py-1 rounded-md font-mono">
                     {"Region: us-central1 (Iowa)"}
                   </span>
-                  <span className="bg-[rgba(161,85,232,0.15)] text-[#a155e8] border border-[rgba(161,85,232,0.2)] px-2.5 py-1 rounded-md font-mono">
-                    {"Runtime: Python 3.12"}
+                  <span className="bg-[rgba(239,68,68,0.15)] text-[#ef4444] border border-[rgba(239,68,68,0.2)] px-2.5 py-1 rounded-md font-mono font-bold">
+                    {"Runtime: Python 3.12 (⚠️ NOT 3.13!)"}
                   </span>
                 </div>
+                <p className="text-[var(--warning-color)] text-[11px] font-semibold mb-3">
+                  {"⚠️ CRITICAL: You must manually change the Runtime dropdown to Python 3.12. Selecting Python 3.13 will fail to compile scikit-learn!"}
+                </p>
                 <p className="text-[var(--text-muted)] mb-2">{"Add Cloud Storage Trigger:"}</p>
                 <div className="flex flex-wrap gap-2 text-xs">
                   <span className="bg-[rgba(161,85,232,0.15)] text-[#a155e8] border border-[rgba(161,85,232,0.2)] px-2.5 py-1 rounded-md font-mono">
@@ -166,14 +169,14 @@ export default function Guides({ rollNumber }: Props) {
           {/* Troubleshooting Cards */}
           <div className="border border-[rgba(239,68,68,0.15)] bg-[rgba(239,68,68,0.02)] rounded-xl p-5 text-sm">
             <h4 className="font-bold text-[#ef4444] flex items-center gap-2 mb-2">
-              <TriangleAlert size={16} /> {"G-Space Verification Not Received (Case Sensitivity)"}
+              <TriangleAlert size={16} /> {"G-Space Verification Case Sensitivity & Bucket Rules"}
             </h4>
             <p className="text-[var(--text-muted)] mb-3">
-              {"The IITM G-Space grading system is strictly "}<strong>{"case-sensitive"}</strong>{" for roll numbers. If your code or GCS bucket uses a lowercase 'f' (e.g., "}<code>{"25f3001012"}</code>{"), the automated bot will silently fail to match your account and won't send the completion checkmark."}
+              {"Google Cloud strictly requires lowercase names for GCS Buckets and Cloud Run services (e.g., "}<code>{"25f2007841_data_storage"}</code>{"). However, the automated IITM grading bot strictly expects an uppercase "}<strong>{"'F'"}</strong>{" (e.g., "}<code>{"25F2007841"}</code>{") in the published Pub/Sub payload!"}
             </p>
             <div className="bg-black/5 border-l-3 border-[#059669] p-3.5 rounded-r-lg">
               <p className="text-gray-900 text-xs">
-                <strong>{"Fix:"}</strong>{" Always use an uppercase "}<strong>{"'F'"}</strong>{" (e.g., "}<code>{"25F3001012"}</code>{") in your GCS bucket name, Cloud Run service name, and Pub/Sub message payload. Re-deploy with the uppercase roll number to trigger the bot."}
+                <strong>{"Fix:"}</strong>{" Create your GCS Bucket and Cloud Run services using a lowercase "}<strong>{"'f'"}</strong>{" to satisfy Google's naming conventions, but make sure your Python code (specifically the "}<code>{"roll"}</code>{" variable in "}<code>{"main.py"}</code>{") uses an uppercase "}<strong>{"'F'"}</strong>{"!"}
               </p>
             </div>
           </div>
@@ -189,6 +192,37 @@ export default function Guides({ rollNumber }: Props) {
               <p className="text-gray-900 text-xs">
                 <strong>{"Fix:"}</strong>{" Delete the failed function and recreate it. Make sure you manually select "}<strong>{"us-central1 (Iowa)"}</strong>{" as the region during setup for both Cloud Run and Cloud Storage."}
               </p>
+            </div>
+          </div>
+
+          <div className="border border-[rgba(239,68,68,0.15)] bg-[rgba(239,68,68,0.02)] rounded-xl p-5 text-sm">
+            <h4 className="font-bold text-[#ef4444] flex items-center gap-2 mb-2">
+              <TriangleAlert size={16} /> {"Building source (see logs) - Failed (Python 3.13 Mismatch)"}
+            </h4>
+            <p className="text-[var(--text-muted)] mb-3">
+              {"If your Cloud Run Function build fails during deployment with Python 3.13, it is because older versions of libraries like "}<code>{"scikit-learn==1.3.2"}</code>{" do not have compatible pre-built packages for Python 3.13."}
+            </p>
+            <div className="bg-black/5 border-l-3 border-[#059669] p-3.5 rounded-r-lg">
+              <p className="text-gray-900 text-xs">
+                <strong>{"Fix:"}</strong>{" Click the blue "}<strong>{"Edit source"}</strong>{" button, find the "}<strong>{"Runtime"}</strong>{" dropdown, change it from "}<strong>{"Python 3.13"}</strong>{" to "}<strong>{"Python 3.12"}</strong>{", and click "}<strong>{"Save and redeploy"}</strong>{"."}
+              </p>
+            </div>
+          </div>
+
+          <div className="border border-[rgba(239,68,68,0.15)] bg-[rgba(239,68,68,0.02)] rounded-xl p-5 text-sm">
+            <h4 className="font-bold text-[#ef4444] flex items-center gap-2 mb-2">
+              <TriangleAlert size={16} /> {"Exceeded Quota / Stuck Deployments (Sandbox Cleanup)"}
+            </h4>
+            <p className="text-[var(--text-muted)] mb-3">
+              {"The IITM sandboxed GCP environment strictly limits resources. Having even one failed/stuck deployment will block all future creations with a 'quota exceeded' error."}
+            </p>
+            <div className="bg-black/5 border-l-3 border-[#059669] p-3.5 rounded-r-lg font-mono">
+              <p className="text-gray-900 text-xs font-semibold mb-1">{"How to clean up resources:"}</p>
+              <ol className="list-decimal list-inside text-xs text-gray-800 space-y-1">
+                <li>{"Search "}<strong>{"Cloud Run"}</strong>{" > check any old services > click "}<strong>{"Delete"}</strong>{"."}</li>
+                <li>{"Search "}<strong>{"Eventarc"}</strong>{" > go to Triggers > check any triggers > click "}<strong>{"Delete"}</strong>{"."}</li>
+                <li>{"Search "}<strong>{"Artifact Registry"}</strong>{" > check "}<code>{"gcf-artifacts"}</code>{" > click "}<strong>{"Delete"}</strong>{"."}</li>
+              </ol>
             </div>
           </div>
 
