@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { GraduationCap, Heart, ExternalLink, User } from "lucide-react";
+import { GraduationCap, Heart, ExternalLink, User, Bot, Sparkles } from "lucide-react";
 import GcsCanvas3D from "@/components/GcsCanvas3D";
 import Guides from "@/components/Guides";
 import CodeGenerator from "@/components/CodeGenerator";
@@ -28,6 +28,14 @@ export default function Home() {
           <p className="text-[var(--text-muted)] text-sm md:text-base max-w-xl font-light">
             {"Generate customized pipeline files, download assets, and troubleshoot error messages to secure your workshop certificate."}
           </p>
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent("open-gcp-ai-mentor"))}
+            className="mt-3 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#0088cc] to-[#7a3ec8] text-white font-extrabold text-xs md:text-sm hover:scale-103 hover:shadow-[0_4px_25px_rgba(0,136,204,0.3)] active:scale-[0.98] transition-all cursor-pointer shadow-md group border-none"
+          >
+            <Bot size={18} className="animate-bounce" style={{ animationDuration: "2.5s" }} />
+            {"Ask AI to Troubleshoot GCP Pipeline"}
+            <Sparkles size={12} className="text-amber-300 animate-pulse" />
+          </button>
         </header>
 
         {/* Configuration Card */}
