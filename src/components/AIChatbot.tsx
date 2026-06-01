@@ -23,7 +23,6 @@ interface Message {
 
 export default function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -62,13 +61,8 @@ export default function AIChatbot() {
     }
   ];
 
-  // Check onboarding state and key/event listeners
+  // Check key/event listeners
   useEffect(() => {
-    const onboarded = localStorage.getItem("iitm_gcp_chatbot_onboarded");
-    if (!onboarded) {
-      setShowOnboarding(true);
-    }
-
     const handleExternalOpen = () => {
       setIsOpen(true);
     };
@@ -94,17 +88,6 @@ export default function AIChatbot() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
-
-  const handleStartAI = () => {
-    localStorage.setItem("iitm_gcp_chatbot_onboarded", "true");
-    setShowOnboarding(false);
-    setIsOpen(true);
-  };
-
-  const handleCloseOnboarding = () => {
-    localStorage.setItem("iitm_gcp_chatbot_onboarded", "true");
-    setShowOnboarding(false);
-  };
 
   const clearChatHistory = () => {
     setMessages([]);
@@ -240,76 +223,7 @@ export default function AIChatbot() {
 
   return (
     <>
-      {/* Premium Onboarding Welcome Modal */}
-      {showOnboarding && (
-        <div className="fixed inset-0 z-55 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
-          <div className="relative w-full max-w-xl rounded-2xl bg-[#0d1527]/90 border border-slate-800 shadow-[0_20px_50px_rgba(0,136,204,0.3)] p-6 md:p-8 flex flex-col items-center gap-6 overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-[#0088cc]/10 blur-2xl" />
-            <div className="absolute -bottom-12 -left-12 w-32 h-32 rounded-full bg-[#7a3ec8]/10 blur-2xl" />
-            
-            <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#0088cc] to-[#7a3ec8] opacity-25 blur-md animate-ping" />
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-[#0088cc] to-[#7a3ec8] text-white flex items-center justify-center shadow-[0_4px_15px_rgba(0,136,204,0.3)]">
-                <Bot size={36} className="animate-bounce" style={{ animationDuration: "2.5s" }} />
-              </div>
-            </div>
 
-            <div className="text-center flex flex-col gap-2">
-              <span className="text-[10px] md:text-xs font-extrabold tracking-widest text-[#0088cc] uppercase flex items-center justify-center gap-1">
-                <Sparkles size={12} className="text-amber-400 animate-pulse" />
-                {"Day 2 ML Pipeline Support"}
-              </span>
-              <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-snug">
-                {"Stuck on Google Cloud Function Deployment?"}
-              </h2>
-              <p className="text-slate-400 text-xs md:text-sm max-w-md mx-auto mt-2 leading-relaxed">
-                {"My custom-built **Academic AI Troubleshooter** is online to review compilation logs, quota failures, casing mismatches, and Eventarc triggers."}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full bg-slate-900/50 rounded-xl p-4 border border-slate-800 text-left">
-              <div className="flex items-center gap-2.5 text-xs text-slate-300">
-                <ShieldCheck size={14} className="text-emerald-500 flex-shrink-0" />
-                <span>{"Python 3.13 Compiles"}</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs text-slate-300">
-                <ShieldCheck size={14} className="text-emerald-500 flex-shrink-0" />
-                <span>{"Eventarc Trigger Lags"}</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs text-slate-300">
-                <ShieldCheck size={14} className="text-emerald-500 flex-shrink-0" />
-                <span>{"Quota Cleanup Routes"}</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs text-slate-300">
-                <ShieldCheck size={14} className="text-emerald-500 flex-shrink-0" />
-                <span>{"F-Casing Rules Guard"}</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 w-full mt-2">
-              <button
-                onClick={handleStartAI}
-                className="flex-grow py-3 px-5 rounded-xl bg-gradient-to-r from-[#0088cc] to-[#7a3ec8] text-white font-extrabold text-sm hover:opacity-95 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,136,204,0.25)] group"
-              >
-                {"Initialize AI Troubleshooter 🚀"}
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button
-                onClick={handleCloseOnboarding}
-                className="py-3 px-5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 font-semibold text-sm transition-all cursor-pointer flex items-center justify-center gap-1.5"
-              >
-                <BookOpen size={14} />
-                {"Explore Guides First"}
-              </button>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-[10px] text-slate-500 text-center leading-normal mt-1">
-              <Shield size={10} />
-              <span>{"Guarded: I guide conceptually and do not provide copy-paste solutions."}</span>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Floating Action Trigger Button (Secondary entry point) */}
       <button
