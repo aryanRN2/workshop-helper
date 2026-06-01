@@ -152,10 +152,25 @@ export default function AIChatbot() {
       systemPromptAction = "Unrestricted Mode: Timing and sync delay advice.";
       responseText = "⚡ **Eventarc Trigger Mismatch or Lag:**\n\nIf uploading `test.csv` fails to trigger your Cloud Function:\n1. Verify both the storage bucket and Cloud Run Function are in **us-central1**.\n2. Eventarc IAM propagation has a delay of up to **10 minutes** during first-time configuration. Wait 5 minutes and overwrite-upload `test.csv`.";
     }
+    else if (q.includes("how do you work") || q.includes("how it works") || q.includes("how works")) {
+      contextRetrieved = "Simulated trace: Explaining assistant mechanics.";
+      systemPromptAction = "Unrestricted Mode: Mechanic explanation.";
+      responseText = "🤖 **How I Work (Unrestricted & Responsive Mode):**\n\n1. **Dynamic RAG Engine:** I inspect your text, match keywords, and retrieve guidelines or errors from my local knowledge base.\n2. **LLM Inference:** In production (deployed on Vercel), I call the live **Llama-3-8B model** on Hugging Face using your HF API Token to generate customized, direct answers.\n3. **Local Dev Sandbox Simulator:** Since local container sandboxes block DNS/network requests to external APIs (throwing `getaddrinfo ENOTFOUND api-inference.huggingface.co`), I fall back to this responsive offline simulator so you can test all UI tabs, sparkles, and recommendation flows immediately!";
+    }
+    else if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
+      contextRetrieved = "Simulated trace: Generative greeting.";
+      systemPromptAction = "Unrestricted Mode: Chat greeting.";
+      responseText = "👋 **Hello! Welcome to the Unrestricted AI Workspace.**\n\nHow can I help you today? I can solve Python build errors, provide GCS deployment scripts, or even bake a chocolate cake! What's on your mind?";
+    }
+    else if (q.includes("who are you") || q.includes("your name") || q.includes("what are you")) {
+      contextRetrieved = "Simulated trace: Identity lookup.";
+      systemPromptAction = "Unrestricted Mode: Identity response.";
+      responseText = "🤖 I am your **IITM GCP AI Assistant**, built by Aryan Maurya using Next.js and Tailwind CSS. I have been upgraded to Unrestricted Mode, meaning I can help you with anything inside and outside the workshop pipeline!";
+    }
     else {
       contextRetrieved = "Retrieved default workshop outline from README.md [L10-30].";
-      systemPromptAction = "Unrestricted Mode: General guide.";
-      responseText = "🙋 **IITM GCP AI Assistant (Unrestricted Mode):**\n\nI can help you troubleshoot any general-knowledge topic or workshop pipeline error! Ensure:\n• Storage bucket & function are in **us-central1**.\n• Cloud Run runtime is set to **Python 3.12**.\n• The roll number in your script has an uppercase **F**.\n\nWhat other code, log error, or questions can I help you resolve? Ask away!";
+      systemPromptAction = "Unrestricted Mode: Smart General Guide.";
+      responseText = `🙋 **IITM GCP AI Assistant (Unrestricted Mode):**\n\nI processed your query: *"${query}"*.\n\nSince we are testing locally inside the network-blocked development sandbox, I fell back to my smart local engine. I am ready to resolve GCP day 2 ML pipeline issues! Try asking about:\n- **"Fix Python 3.13 scikit-learn compilation build crash"**\n- **"Resolve stuck deployments exceeded storage sandbox resource quota"**\n- **"Casing rules roll number uppercase F mismatch error"**\n- **"Eventarc trigger mismatch bucket and function upload test.csv lag"**\n- **"Bake a chocolate cake"**\n\n*When deployed live to Vercel, this exact question is sent to Llama 3 for real-time answers!*`;
     }
 
     return {
